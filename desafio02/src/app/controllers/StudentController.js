@@ -1,7 +1,22 @@
+import * as Yup from 'yup';
 import Student from '../models/Student';
 
 class StudentController {
   async store(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string()
+        .email()
+        .required(),
+      age: Yup.integer().required(),
+      weight: Yup.float().required(),
+      height: Yup.float().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation failed.' });
+    }
+
     const studentExists = await Student.findOne({
       where: { email: req.body.email },
     });
@@ -18,6 +33,20 @@ class StudentController {
   }
 
   async update(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string(),
+      email: Yup.string()
+        .email()
+        .required(),
+      age: Yup.integer(),
+      weight: Yup.float(),
+      height: Yup.float(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation failed.' });
+    }
+
     const studentExists = await Student.findOne({
       where: { email: req.body.email },
     });
@@ -32,6 +61,17 @@ class StudentController {
   }
 
   async show(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string(),
+      email: Yup.string()
+        .email()
+        .required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation failed.' });
+    }
+
     const studentExists = await Student.findOne({
       where: { email: req.body.email },
     });
