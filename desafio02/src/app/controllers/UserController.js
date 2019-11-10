@@ -1,4 +1,4 @@
-// import User from '../models/User';
+import User from '../models/User';
 
 class UserController {
   async store(req, res) {
@@ -15,8 +15,7 @@ class UserController {
   }
 
   async update(req, res) {
-    return res.json({ message: 'Update do admin.' });
-    /*    const { email, oldPassword } = req.body;
+    const { email, oldPassword } = req.body;
 
     const user = await User.findByPk(req.userId);
 
@@ -34,7 +33,7 @@ class UserController {
 
     const { id, name, provider } = await user.update(req.body);
 
-    return res.json({ id, name, email, provider }); */
+    return res.json({ id, name, email, provider });
   }
 }
 
