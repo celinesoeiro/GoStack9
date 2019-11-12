@@ -1,0 +1,28 @@
+/**
+ * CRIAÇÃO DO ROTEAMENTO
+ */
+import { Router } from 'express';
+import multer from 'multer';
+// Configurações do multer
+import multerConfig from './config/multer';
+// Controladores
+import UserController from './app/controllers/UserController';
+import SessionController from './app/controllers/SessionController';
+import FileController from './app/controllers/FileController';
+// Middleware de autenticação
+import authMiddleware from './app/middlewares/auth';
+// Criação das rotas
+const routes = new Router();
+// Configuração do upload
+const upload = multer(multerConfig);
+// Rotas de criação de usuário e sessão
+routes.post('/users', UserController.store);
+routes.post('/sessions', SessionController.store);
+// Middleware global de autenticação. Só vale para as rotas abaixo dele. Login
+routes.use(authMiddleware);
+// Upload de dados do usuário logados
+routes.put('/users', UserController.update);
+// Pegando o arquivo
+routes.post('/files', upload.single('file'), FileController.store);
+
+export default routes;
