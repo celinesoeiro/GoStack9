@@ -34,10 +34,6 @@ module.exports = {
         allowNull: false,
       },
     });
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
-    */
   },
 
   down: queryInterface => {
