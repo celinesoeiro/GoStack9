@@ -40,4 +40,6 @@ routes.get('/schedule', ScheduleController.index);
 routes.get('/notifications', NotificationController.index);
 // Marcando uma notificação como lida
 routes.put('/notifications/:id', NotificationController.update);
+// Cancelando um agendamento
+routes.delete('/appointments/:id', AppointmentController.delete);
 export default routes;
