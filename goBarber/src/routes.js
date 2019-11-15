@@ -12,6 +12,7 @@ import FileController from './app/controllers/FileController';
 import ProviderController from './app/controllers/ProviderController';
 import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController';
+import NotificationController from './app/controllers/NotificationController';
 // Middleware de autenticação
 import authMiddleware from './app/middlewares/auth';
 // Criação das rotas
@@ -35,4 +36,6 @@ routes.post('/appointments', AppointmentController.store);
 routes.get('/appointments', AppointmentController.index);
 // Listando a agenda do prestador de serviços
 routes.get('/schedule', ScheduleController.index);
+// Listando as notificações
+routes.get('/notifications', NotificationController.index);
 export default routes;
