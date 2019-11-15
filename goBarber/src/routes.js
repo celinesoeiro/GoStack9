@@ -38,4 +38,6 @@ routes.get('/appointments', AppointmentController.index);
 routes.get('/schedule', ScheduleController.index);
 // Listando as notificações
 routes.get('/notifications', NotificationController.index);
+// Marcando uma notificação como lida
+routes.put('/notifications/:id', NotificationController.update);
 export default routes;
