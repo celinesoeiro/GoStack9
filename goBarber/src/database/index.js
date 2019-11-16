@@ -26,7 +26,8 @@ class Database {
 
   mongo() {
     this.mongoConnection = mongoose.connect(
-      'mongodb://omnistack:omnistack@cluster0-shard-00-00-bubnn.mongodb.net:27017,cluster0-shard-00-01-bubnn.mongodb.net:27017,cluster0-shard-00-02-bubnn.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
+      process.env.MONGO_URL,
+      // 'mongodb://omnistack:omnistack@cluster0-shard-00-00-bubnn.mongodb.net:27017,cluster0-shard-00-01-bubnn.mongodb.net:27017,cluster0-shard-00-02-bubnn.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
       // 'mongodb+srv://celine:asenhaE25@gobarber-asajd.mongodb.net/test?retryWrites=true&w=majority',
       // 'mongodb://celine:asenhaE25@gobarber-shard-00-00-asajd.mongodb.net:27017,gobarber-shard-00-01-asajd.mongodb.net:27017,gobarber-shard-00-02-asajd.mongodb.net:27017/test?ssl=true&replicaSet=goBarber-shard-0&authSource=admin&retryWrites=true&w=majority',
       {
