@@ -13,6 +13,7 @@ import ProviderController from './app/controllers/ProviderController';
 import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController';
 import NotificationController from './app/controllers/NotificationController';
+import AvailableController from './app/controllers/AvailableController';
 // Middleware de autenticação
 import authMiddleware from './app/middlewares/auth';
 // Criação das rotas
@@ -42,4 +43,6 @@ routes.get('/notifications', NotificationController.index);
 routes.put('/notifications/:id', NotificationController.update);
 // Cancelando um agendamento
 routes.delete('/appointments/:id', AppointmentController.delete);
+// Listando os horários disponíveis para agendamento de um unico provider no dia
+routes.get('/providers/:providerId/available', AvailableController.index);
 export default routes;
