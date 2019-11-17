@@ -8,9 +8,12 @@ class StudentController {
       email: Yup.string()
         .email()
         .required(),
-      age: Yup.integer().required(),
-      weight: Yup.float().required(),
-      height: Yup.float().required(),
+      age: Yup.number()
+        .integer()
+        .required(),
+      weight: Yup.number().required(),
+      height: Yup.number().required(),
+      student: Yup.boolean().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -38,9 +41,9 @@ class StudentController {
       email: Yup.string()
         .email()
         .required(),
-      age: Yup.integer(),
-      weight: Yup.float(),
-      height: Yup.float(),
+      age: Yup.number().integer(),
+      weight: Yup.number(),
+      height: Yup.number(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -60,28 +63,12 @@ class StudentController {
     return res.json({ name, age, weight, height });
   }
 
-  async show(req, res) {
-    const schema = Yup.object().shape({
-      name: Yup.string(),
-      email: Yup.string()
-        .email()
-        .required(),
+  async index(req, res) {
+    const students = await Student.findAll({
+      where: { student: true },
+      attributes: ['id', 'name', 'weight', 'height'],
     });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation failed.' });
-    }
-
-    const studentExists = await Student.findOne({
-      where: { email: req.body.email },
-    });
-
-    if (!studentExists) {
-      return res.status(400).json({ error: 'Student not found.' });
-    }
-
-    const { name, age, weight, height } = await studentExists;
-    return res.json({ name, age, weight, height });
+    return res.json(students);
   }
 }
 
