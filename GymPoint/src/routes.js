@@ -15,6 +15,7 @@ routes.post('/sessions', sessionController.store);
 
 // Rotas dos alunos
 routes.post('/students/:id/checkins', CheckinController.store);
+routes.get('/students/:id/checkins', CheckinController.index);
 
 routes.use(authMiddlewares);
 

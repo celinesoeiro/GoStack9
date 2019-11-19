@@ -23,7 +23,26 @@ class CheckinController {
     return res.json({ checkin });
   }
 
-  // async index(req, res) {}
+  async index(req, res) {
+    // Validação de usuário - O usuário já está cadastrado?
+    const studentExists = await Student.findByPk(req.params.id);
+    if (!studentExists) {
+      return res.status(400).json({ error: 'Student not found.' });
+    }
+    // Validação de matrícula - O usuário está matriculado?
+    const enrollmentExists = await Enrollment.findOne({
+      where: { student_id: req.params.id },
+    });
+    if (!enrollmentExists) {
+      return res.status(400).json({ error: 'Enrollment not found.' });
+    }
+
+    const checkins = await Checkin.findAll({
+      where: { student_id: req.params.id },
+    });
+
+    return res.json(checkins);
+  }
 }
 
 export default new CheckinController();
