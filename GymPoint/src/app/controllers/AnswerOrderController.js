@@ -1,5 +1,8 @@
 import * as Yup from 'yup';
 import HelpOrder from '../models/HelpOrder';
+import Queue from '../../lib/queue';
+import RequestMail from '../jobs/RequestMail';
+import Student from '../models/Student';
 
 class HelpOrderController {
   async store(req, res) {
@@ -18,6 +21,7 @@ class HelpOrderController {
     // Pegando os dados do aluno
     const { student_id } = helpId;
     const { question } = helpId;
+    const { name, email } = await Student.findByPk(student_id);
     // Passou as validação - Cria a sessão
     const answer_at = new Date();
     const { answer } = req.body;
@@ -26,6 +30,13 @@ class HelpOrderController {
       question,
       answer,
       answer_at,
+    });
+    // Respondeu? Envia a resposta por email
+    await Queue.add(RequestMail.key, {
+      name,
+      email,
+      question,
+      answer,
     });
     // Criou a resposta da pergunta? Deleta a pergunta.
     helpId.destroy();
