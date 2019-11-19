@@ -3,6 +3,8 @@ import { startOfHour, parseISO, isBefore, addDays, isAfter } from 'date-fns';
 import Plan from '../models/Plan';
 import Student from '../models/Student';
 import Enrollment from '../models/Enrollment';
+import Queue from '../../lib/queue';
+import RegistrationMail from '../jobs/RegistrationMail';
 
 class EnrollmentController {
   async store(req, res) {
@@ -33,7 +35,7 @@ class EnrollmentController {
     if (!studentExists) {
       return res.status(400).json({ error: 'Student not found.' });
     }
-    // Validação da data
+    // Validação da data - A data está por vir?
     const hourStart = startOfHour(parseISO(req.body.start_date));
     if (isBefore(hourStart, new Date())) {
       return res.status(400).json({
@@ -92,6 +94,13 @@ class EnrollmentController {
 
     Enrollment.create({ student_id, plan_id, start_date, end_date, price });
 
+    await Queue.add(RegistrationMail.key, {
+      studentExists,
+      planExists,
+      price,
+      end_date,
+    });
+
     return res.json({ student_id, plan_id, start_date, end_date, price });
   }
 
@@ -146,7 +155,10 @@ class EnrollmentController {
       },
     });
     // Validação da data - A data escolhida é após a data final do plano atual?
-    const validDate = isAfter(req.body.start_date, enroll.end_date);
+    const validDate = isAfter(
+      new Date(req.body.start_date),
+      new Date(enroll.end_date)
+    );
     if (!validDate) {
       return res.status(400).json({
         error: 'You cannot change plans before your actual plan is over.',
