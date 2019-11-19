@@ -1,10 +1,17 @@
-// import * as Yup from 'yup';
-import Checkin from '../models/Checkin';
+import * as Yup from 'yup';
+import HelpOrder from '../models/HelpOrder';
 import Enrollment from '../models/Enrollment';
 import Student from '../models/Student';
 
-class CheckinController {
+class HelpOrderController {
   async store(req, res) {
+    const schema = Yup.object().shape({
+      question: Yup.string().required(),
+    });
+    // Validação dos dados de entrada
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation failed.' });
+    }
     // Validação de usuário - O usuário já está cadastrado?
     const studentExists = await Student.findByPk(req.params.id);
     if (!studentExists) {
@@ -17,18 +24,10 @@ class CheckinController {
     if (!enrollmentExists) {
       return res.status(400).json({ error: 'Enrollment not found.' });
     }
-    // Validação de quantidade - Mais de 5 checkins em 7 dias?
-    const quantCheckins = await Checkin.findAndCountAll({
-      where: { student_id: req.params.id },
-    });
-    if (quantCheckins.count >= 5) {
-      return res
-        .status(400)
-        .json({ error: 'You can only acess GymPoint 5 times in 7 days.' });
-    }
     // Passou as validação - Cria a sessão
     const student_id = req.params.id;
-    const checkin = await Checkin.create({ student_id });
+    const { question } = req.body;
+    const checkin = await HelpOrder.create({ student_id, question });
     return res.json({ checkin });
   }
 
@@ -45,13 +44,11 @@ class CheckinController {
     if (!enrollmentExists) {
       return res.status(400).json({ error: 'Enrollment not found.' });
     }
-
-    const checkins = await Checkin.findAll({
+    const helporders = await HelpOrder.findAll({
       where: { student_id: req.params.id },
     });
-
-    return res.json(checkins);
+    return res.json(helporders);
   }
 }
 
-export default new CheckinController();
+export default new HelpOrderController();

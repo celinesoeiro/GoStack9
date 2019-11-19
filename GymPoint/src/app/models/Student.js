@@ -19,6 +19,7 @@ class Student extends Model {
 
   static associate(models) {
     this.hasMany(models.Checkin);
+    this.hasMany(models.HelpOrder);
   }
 }
 

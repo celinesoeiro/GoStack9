@@ -6,6 +6,8 @@ import sessionController from './app/controllers/SessionController';
 import planController from './app/controllers/PlanController';
 import EnrollmentController from './app/controllers/EnrollmentController';
 import CheckinController from './app/controllers/CheckinController';
+import HelpOrderController from './app/controllers/HelpOrderController';
+import AnswerOrderController from './app/controllers/AnswerOrderController';
 import authMiddlewares from './app/middlewares/auth';
 
 const routes = new Router();
@@ -13,12 +15,18 @@ const routes = new Router();
 routes.post('/users', userController.store);
 routes.post('/sessions', sessionController.store);
 
-// Rotas dos alunos
+// ROTAS DOS ALUNOS
+// Checkins - Iniciar sessão
 routes.post('/students/:id/checkins', CheckinController.store);
+// Checkins - Listagem de todas os visitas na academia
 routes.get('/students/:id/checkins', CheckinController.index);
-
+// Help Orders - Pergunta de um aluno
+routes.post('/students/:id/help-orders', HelpOrderController.store);
+// Help Orders - Listagem de todas as perguntas de um aluno
+routes.get('/students/:id/help-orders', HelpOrderController.index);
+// Autenticação
 routes.use(authMiddlewares);
-
+// ROTAS DOS ADMINS
 // Atualização dos dados do administrador
 routes.put('/users', userController.update);
 // Cadastro de alunos novos
@@ -43,4 +51,8 @@ routes.get('/enrollments', EnrollmentController.index);
 routes.put('/enrollments', EnrollmentController.update);
 // Gestão de matrículas - Cancela uma matrícula
 routes.delete('/enrollments', EnrollmentController.delete);
+// Help Orders - Respondendo as perguntas
+routes.post('/help-orders/:id/answer', AnswerOrderController.store);
+// Help Orders - Listagem das perguntas não respondidas
+routes.get('/help-orders/answer', AnswerOrderController.index);
 export default routes;
