@@ -17,6 +17,16 @@ class CheckinController {
     if (!enrollmentExists) {
       return res.status(400).json({ error: 'Enrollment not found.' });
     }
+    // Validação de quantidade - Mais de 5 checkins em 7 dias?
+    const quantCheckins = await Checkin.findAndCountAll({
+      where: { student_id: req.params.id },
+    });
+    if (quantCheckins.count >= 5) {
+      return res
+        .status(400)
+        .json({ error: 'You can only acess GymPoint 5 times in 7 days.' });
+    }
+    console.log(quantCheckins.count);
     // Passou as validação - Cria a sessão
     const student_id = req.params.id;
     const checkin = await Checkin.create({ student_id });
