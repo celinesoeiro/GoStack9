@@ -55,4 +55,6 @@ routes.delete('/enrollments', EnrollmentController.delete);
 routes.post('/help-orders/:id/answer', AnswerOrderController.store);
 // Help Orders - Listagem das perguntas não respondidas
 routes.get('/help-orders/answer', AnswerOrderController.index);
+// Help Order - Respondendo a uma pergunta
+// routes.put('/help-orders/:id/answer', AnswerOrderController.update);
 export default routes;

@@ -27,14 +27,17 @@ class HelpOrderController {
       answer,
       answer_at,
     });
+    // Criou a resposta da pergunta? Deleta a pergunta.
+    helpId.destroy();
     return res.json({ answers });
   }
 
   async index(req, res) {
-    const emptyOrders = await HelpOrder.findAll({
+    const emptyAnswer = await HelpOrder.findAll({
       where: { answer: null },
     });
-    return res.json(emptyOrders);
+
+    return res.json(emptyAnswer);
   }
 }
 
