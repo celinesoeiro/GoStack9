@@ -5,12 +5,16 @@ import studentController from './app/controllers/StudentController';
 import sessionController from './app/controllers/SessionController';
 import planController from './app/controllers/PlanController';
 import EnrollmentController from './app/controllers/EnrollmentController';
+import CheckinController from './app/controllers/CheckinController';
 import authMiddlewares from './app/middlewares/auth';
 
 const routes = new Router();
 
 routes.post('/users', userController.store);
 routes.post('/sessions', sessionController.store);
+
+// Rotas dos alunos
+routes.post('/students/:id/checkins', CheckinController.store);
 
 routes.use(authMiddlewares);
 
