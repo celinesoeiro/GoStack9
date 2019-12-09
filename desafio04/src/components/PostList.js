@@ -16,22 +16,22 @@ class PostList extends Component {
           {
             id: 2,
             author: {
-              name: "Diego Fernandes",
-              avatar: "https://avatars2.githubusercontent.com/u/2254731?v=4"
+              name: 'Diego Fernandes',
+              avatar: 'https://avatars2.githubusercontent.com/u/2254731?v=4'
             },
             date: '04 Jun 2019',
-            content: "Comentário de Diego"
+            content: 'Comentário de Diego'
           }
         ]
       },
       {
         id: 3,
         author: {
-          name: "Lucas José Mendes",
-          avatar: "https://avatars0.githubusercontent.com/u/6298034?s=460&v=4"
+          name: 'Lucas José Mendes',
+          avatar: 'https://avatars0.githubusercontent.com/u/6298034?s=460&v=4'
         },
-        date: "05 Jun 2019",
-        content: "Comentário de Lucas",
+        date: '05 Jun 2019',
+        content: 'Fala de Lucas',
         comments: []
       }
     ]

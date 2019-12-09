@@ -7,10 +7,10 @@ import PostList from './components/PostList';
 function App(){
   return (
     <>
-      <Header/>
-      <PostList/>
+      <Header />
+      <PostList />
     </>
-  )
+  );
 }
 
 export default App;
