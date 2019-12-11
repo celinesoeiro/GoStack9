@@ -68,6 +68,13 @@ export default class Main extends Component {
     }
   };
 
+  handleDelete = rep => {
+    const { repositories } = this.state;
+    this.setState({
+      repositories: repositories.filter(rp => rp !== rep),
+    });
+  };
+
   render() {
     const { newRepo, repositories, loading, error } = this.state;
 
@@ -102,6 +109,12 @@ export default class Main extends Component {
               <Link to={`/repository/${encodeURIComponent(repository.name)}`}>
                 Detalhes
               </Link>
+              <button
+                type="button"
+                onClick={() => this.handleDelete(repository)}
+              >
+                Remover
+              </button>
             </li>
           ))}
         </List>

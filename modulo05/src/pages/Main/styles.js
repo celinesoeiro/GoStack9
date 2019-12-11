@@ -65,6 +65,12 @@ export const List = styled.ul`
     a {
       color: #7159c1;
       text-decoration: none;
+      align-items: center;
+      flex-direction: column;
+    }
+    button {
+      color: #7159c1;
+      text-decoration: none;
     }
   }
 `;
