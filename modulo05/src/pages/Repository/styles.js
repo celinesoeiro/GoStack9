@@ -106,6 +106,7 @@ export const IssueFilter = styled.div`
   display: flex;
   justify-content: center;
   padding-bottom: 15px;
+
   button {
     border-radius: 4px;
     outline: 0;
@@ -115,6 +116,27 @@ export const IssueFilter = styled.div`
     &:nth-child(${props => props.active + 1}) {
       background: #576574;
       color: white;
+    }
+  }
+`;
+
+export const PageSelection = styled.div`
+  display: flex;
+  padding-top: 15px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+
+  button {
+    border-radius: 4px;
+    outline: 0;
+    border: 0;
+    padding: 8px;
+    transition: opacity 0.25 ease-out;
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
     }
   }
 `;
