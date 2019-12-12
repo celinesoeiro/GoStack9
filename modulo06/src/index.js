@@ -1,4 +1,5 @@
 import React from 'react';
+import './config/ReactotronConfig';
 
 import {
   SafeAreaView,
@@ -55,6 +56,8 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
+
+console.tron.log('olá');
 
 export default function App() {
   return (
