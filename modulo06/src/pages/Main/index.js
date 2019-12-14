@@ -1,3 +1,4 @@
+/* eslint-disable react/static-property-placement */
 /* eslint-disable react/state-in-constructor */
 import React, {Component} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
