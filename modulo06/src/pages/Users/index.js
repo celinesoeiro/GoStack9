@@ -35,6 +35,7 @@ export default class Users extends Component {
     stars: [],
     loading: true,
     page: 1,
+    refreshing: false,
   };
 
   async componentDidMount() {
@@ -54,6 +55,7 @@ export default class Users extends Component {
       stars: page >= 2 ? [...stars, ...response.data] : response.data,
       loading: false,
       page,
+      refreshing: false,
     });
   };
 
@@ -63,9 +65,13 @@ export default class Users extends Component {
     this.load(nextPage);
   };
 
+  refreshList = () => {
+    this.setState({refreshing: true, stars: []}, this.load);
+  };
+
   render() {
     const {navigation} = this.props;
-    const {stars, loading} = this.state;
+    const {stars, loading, refreshing} = this.state;
     const user = navigation.getParam('user');
 
     return (
@@ -83,6 +89,8 @@ export default class Users extends Component {
             keyExtractor={star => String(star.id)}
             onEndReachedThreshold={0.2}
             onEndReached={this.loadMore}
+            onRefresh={this.refreshList}
+            refreshing={refreshing}
             renderItem={({item}) => (
               <Starred>
                 <OwnerAvatar source={{uri: item.owner.avatar_url}} />
