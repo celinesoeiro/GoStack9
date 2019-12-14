@@ -2,6 +2,7 @@
 /* eslint-disable react/static-property-placement */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {RectButton} from 'react-native-gesture-handler';
 
 import api from '../../services/api';
 
@@ -28,6 +29,7 @@ export default class Users extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
       getParam: PropTypes.func,
+      navigate: PropTypes.func,
     }).isRequired,
   };
 
@@ -69,6 +71,12 @@ export default class Users extends Component {
     this.setState({refreshing: true, stars: []}, this.load);
   };
 
+  handleNavigate = repository => {
+    const {navigation} = this.props;
+
+    navigation.navigate('Repository', {repository});
+  };
+
   render() {
     const {navigation} = this.props;
     const {stars, loading, refreshing} = this.state;
@@ -92,7 +100,7 @@ export default class Users extends Component {
             onRefresh={this.refreshList}
             refreshing={refreshing}
             renderItem={({item}) => (
-              <Starred>
+              <Starred onPress={() => this.handleNavigate(item)}>
                 <OwnerAvatar source={{uri: item.owner.avatar_url}} />
                 <Info>
                   <Title>{item.name}</Title>
