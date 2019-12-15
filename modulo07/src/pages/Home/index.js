@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import api from '../../services/api';
 import { formatPrice } from '../../util/format';
-
+import * as CartActions from '../../store/modules/cart/actions';
 import { ShoppingList } from './styles';
 
 class Home extends Component {
@@ -22,13 +23,9 @@ class Home extends Component {
   }
 
   handleAddProduct = product => {
-    const { dispatch } = this.props;
+    const { addToCart } = this.props;
 
-    dispatch({
-      // Toda action precisa de um type
-      type: 'ADD_TO_CART',
-      product,
-    });
+    addToCart(product);
   };
 
   render() {
@@ -57,4 +54,9 @@ class Home extends Component {
   }
 }
 
-export default connect()(Home);
+// converte actions do redux em propriedades dos componentes
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+
+// O primeiro parâmetro é o mapStateToProps, como não existe, coloca null
+export default connect(null, mapDispatchToProps)(Home);
