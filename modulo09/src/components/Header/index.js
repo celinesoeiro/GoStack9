@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import Notifications from '../Notifications';
 import { Container, Content, Profile } from './styles';
 import logo from '~/assets/logoRoxo.svg';
 
@@ -14,6 +15,7 @@ export default function Header() {
         </nav>
 
         <aside>
+          <Notifications />
           <Profile>
             <div>
               <strong>Celine</strong>
