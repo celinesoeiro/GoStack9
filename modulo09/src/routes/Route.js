@@ -20,8 +20,9 @@ export default function RouteWrapper({
   if (signed && !isPrivate) {
     return <Redirect to="/dashboard" />;
   }
-
+  console.tron.log(signed);
   const Layout = signed ? DefaultLayout : AuthLayout;
+
   return (
     <Route
       {...rest}

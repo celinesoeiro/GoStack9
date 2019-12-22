@@ -21,7 +21,7 @@ export function* signIn({ payload }) {
     }
 
     // Seta informações que vão ser utilizadas em todas as requisições
-    api.defaults.headers.Authorization = `Bearer${token}`;
+    api.defaults.headers.Authorization = `Bearer ${token}`;
 
     yield put(signInSuccess(token, user));
 
@@ -56,12 +56,12 @@ export function setToken({ payload }) {
   const { token } = payload.auth;
 
   if (token) {
-    api.defaults.headers.Authorization = `Bearer${token}`;
+    api.defaults.headers.Authorization = `Bearer ${token}`;
   }
 }
 
 export default all([
-  takeLatest('@persist/REHYDRATE', setToken),
+  takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
 ]);

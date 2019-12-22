@@ -10,12 +10,12 @@ export default function auth(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
       case '@auth/SIGN_IN_REQUEST': {
-        draft.profile = action.payload.user;
         draft.loading = true;
         break;
       }
       case '@auth/SIGN_IN_SUCCESS': {
         draft.profile = action.payload.user;
+        draft.token = action.payload.token;
         draft.signed = true;
         draft.loading = false;
         break;

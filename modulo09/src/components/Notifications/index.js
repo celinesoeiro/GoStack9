@@ -19,9 +19,8 @@ export default function Notifications() {
 
   const hasUnread = useMemo(
     () =>
-      !!notifications.find(notification => notification.read === false)[
-        notifications
-      ]
+      Boolean(notifications.find(notification => notification.read === false)),
+    [notifications]
   );
 
   useEffect(() => {
@@ -48,7 +47,7 @@ export default function Notifications() {
   }
 
   async function handleMarkAsRead(id) {
-    await api.push(`notifications/${id}`);
+    await api.put(`notifications/${id}`);
 
     setNotifications(
       notifications.map(notification =>
