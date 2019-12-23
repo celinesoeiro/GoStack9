@@ -18,6 +18,7 @@ export function* signIn({ payload }) {
 
     if (!user.provider) {
       toast.error('O usuário não é prestador');
+      return;
     }
 
     // Seta informações que vão ser utilizadas em todas as requisições
@@ -25,7 +26,7 @@ export function* signIn({ payload }) {
 
     yield put(signInSuccess(token, user));
 
-    history.push('./dashboard');
+    history.push('/dashboard');
   } catch (err) {
     toast.error('Falha na autenticação. Verifique seus dados');
     yield put(signFailure());
@@ -43,7 +44,7 @@ export function* signUp({ payload }) {
       provider: true,
     });
 
-    history.push('./');
+    history.push('/');
   } catch (err) {
     toast.error('Falha no cadastro. Verifique seus dados');
     yield put(signFailure());
@@ -60,8 +61,13 @@ export function setToken({ payload }) {
   }
 }
 
+export function signOut() {
+  history.push('/');
+}
+
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
+  takeLatest('@auth/SIGN_OUT', signOut),
 ]);
